@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider, useLoaderData, useParams } from 'react-router'
 
 // https://reactrouter.com/start/data/routing
@@ -72,6 +73,48 @@ const router = createBrowserRouter([
         return obj.params
     },
     Component: Page6DynamicSegment // Component is a new prop that allows you to define a component that will be rendered when the route is matched, instead of using the element prop. This allows you to use the loader function to fetch data before the component is rendered.
+  },
+  {
+    path: 'page7',
+    middleware: [async (_, next) => {
+        const start = performance.now();
+        console.log(_)
+        console.log("before next")
+        await next();
+        console.log("after next")
+        console.log(`Navigation time: ${performance.now() - start} ms`); //navigation time is longer for subpages because the parent middleware is also executed for subpages, so the navigation time is the sum of the parent and child middleware execution times.
+    }],
+    Component: () => {
+        useEffect(() => {
+            console.log("Page 7 mounted");
+        })
+        return <div>Page 7 <Outlet /></div>
+    },
+    loader: async () => {
+        console.log("loader")
+        return null
+    },
+    children: [
+        {
+            path: "subpage",
+            middleware: [async (_, next) => {
+                console.log(_)
+                console.log("before next subpage")
+                await next();
+                console.log("after next subpage")
+            }],
+            Component: () => {
+                useEffect(() => {
+                    console.log("Page 7 Subpage mounted");
+                })
+                return <div>Subpage</div>
+            },
+            loader: async () => {
+                console.log("loader subpage")
+                return null
+            }
+        }
+    ]
   }
 ])
 

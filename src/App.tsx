@@ -10,8 +10,8 @@ function App() {
   return (
     <>
       App.tsx
-      {/* <DataRouter /> */}
-      <DeclarativeRouter />
+      <DataRouter />
+      {/* <DeclarativeRouter /> */}
     </>
   )
 }
