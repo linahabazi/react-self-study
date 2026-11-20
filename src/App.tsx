@@ -4,18 +4,14 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import DeclarativeRouter from './router/delcarative-router'
-import { Link, NavLink } from 'react-router'
+import DataRouter from './router/data-router'
 
 function App() {
   return (
     <>
+      App.tsx
+      {/* <DataRouter /> */}
       <DeclarativeRouter />
-      <nav>
-        <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
-          Home
-        </NavLink>
-        <Link to="/page1">Page 1</Link>
-      </nav>
     </>
   )
 }
